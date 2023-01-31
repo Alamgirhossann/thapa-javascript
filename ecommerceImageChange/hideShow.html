@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>Hide Show Container</title>
+    <style>
+        body {
+            background: rgb(110, 110, 110);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+        .container{
+            background: rgb(10, 184, 184);
+            height: 250px;
+            width: 400px;
+            display: grid;
+            text-align: center;
+        }
+        .btn{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        button{
+            width: 80px;
+            height: 25px;
+        }
+        .first, .second{
+            transform: translateX();
+            transition: 2s;
+        }
+        input{
+            margin: 2px 0px;
+        }
+        .bgc{
+            background: rgb(155, 153, 153);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="btn">
+            <button class="login" onclick="first()">Login</button>
+            <button class="reg" onclick="second()">Register</button>
+        </div>
+        <div class="first">
+            <input type="email"> <br>
+            <input type="password"> <br>
+            <input type="button" value="Login">
+        </div>
+        <div class="second">
+            <input type="text"> <br>
+            <input type="text"> <br>
+            <input type="email"> <br>
+            <input type="password"> <br>
+            <input type="button" value="Register">
+        </div>
+    </div>
+    <script>
+            const firstCont = document.querySelector(".first");
+            const secondCont = document.querySelector(".second");
+            const login = document.querySelector(".login");
+            const reg = document.querySelector(".reg");
+
+            login.classList.add('bgc')
+            secondCont.style.display = 'none';
+
+        function first(){
+            firstCont.style.display = 'block';
+            secondCont.style.display = 'none';
+            login.classList.add('bgc')
+            reg.classList.remove('bgc')
+        }
+
+        function second(){
+            firstCont.style.display = 'none';
+            secondCont.style.display = 'block';
+            login.classList.remove('bgc');
+            reg.classList.add('bgc')
+        }
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+      </script>
+</body>
+</html>

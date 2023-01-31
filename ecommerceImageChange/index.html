@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: rgb(110, 110, 110);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+        .images, .big-img{
+            padding: 0 15px;
+        }
+        .sml-img {
+            height: 5rem;
+            width: 5rem;
+        }
+        .big-img2{
+            height: 30rem;
+            width: 35rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="images">
+        <img class="sml-img" src="./images/shoe (1).jpg" alt="" onclick="bigImage(this)">
+        <img class="sml-img" src="./images/shoe (2).jpg" alt="" onclick="bigImage(this)">
+        <img class="sml-img" src="./images/shoe (3).jpg" alt="" onclick="bigImage(this)">
+        <img class="sml-img" src="./images/shoe (4).jpg" alt="" onclick="bigImage(this)">
+    </div>
+    <div class="big-img">
+        <img class="big-img2" src="./images/shoe (1).jpg" alt="">
+    </div>
+    <script>
+        function bigImage(image){
+            const selectImg = document.querySelector(".big-img2");
+            selectImg.src = image.src;
+        }
+    </script>
+</body>
+
+</html>

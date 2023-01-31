@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: rgb(110, 110, 110);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        font-size: 50px;
+      }
+
+      .date {
+        display: flex;
+        color: white;
+      }
+
+      .time {
+        display: flex;
+        color: white;
+      }
+
+      #day,
+      #month,
+      #daynum,
+      #year,
+      #hour,
+      #minute,
+      #second,
+      #period {
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+
+  <body onload="initClock()">
+    <div class="dateTime">
+      <div class="date">
+        <div id="day">Day</div>
+        <div id="month">Month</div>
+        <div id="daynum">00</div>
+        <div id="year">year</div>
+      </div>
+      <div class="time">
+        <div id="hour">00</div>:
+        <div id="minute">00</div>:
+        <div id="second">00</div>
+        <div id="period">am</div>
+      </div>
+    </div>
+
+    <script>
+      function updateClock() {
+        let now = new Date();
+        let dname = now.getDay(),
+          mo = now.getMonth(),
+          datenum = now.getDate(),
+          yr = now.getFullYear(),
+          hou = now.getHours(),
+          min = now.getMinutes(),
+          sec = now.getSeconds(),
+          pe = "am";
+
+        if (hou == 0) {
+          hou = 12;
+        }
+        if (hou > 12) {
+          hou = hou - 12;
+          pe = "pm";
+        }
+        Number.prototype.pad = function (digits) {
+          for (var n = this.toString(); n.length < digits; n = 0 + n);
+          return n;
+        };
+
+        let months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "Septembar",
+          "Octbar",
+          "Novembar",
+          "Decembar",
+        ];
+        let weeks = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        let ids = [
+          "day",
+          "month",
+          "daynum",
+          "year",
+          "hour",
+          "minute",
+          "second",
+          "period",
+        ];
+        let value = [
+          weeks[dname],
+          months[mo],
+          datenum.pad(2),
+          yr,
+          hou.pad(2),
+          min.pad(2),
+          sec.pad(2),
+          pe,
+        ];
+
+        for (let i = 0; i < ids.length; i++) {
+          document.getElementById(ids[i]).firstChild.nodeValue = value[i];
+        }
+      }
+      function initClock() {
+        updateClock();
+        setInterval(updateClock, 1);
+      }
+    </script>
+  </body>
+</html>

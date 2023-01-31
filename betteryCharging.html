@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Document</title>
+    <style>
+         body {
+            background: rgb(73, 70, 70);
+            font-size: 50px;
+            color: white;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+        .fa{
+            font-size: 90px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h2>Charging Bettery</h2>
+        <i class="fa"></i>
+    </div>
+    <script>
+
+        const thermo = () => {
+            const icon = document.querySelector(".fa");
+            icon.innerHTML = `&#xf244`
+            icon.style.color = 'red';
+            setTimeout(() => {
+                icon.innerHTML = `&#xf243`
+                icon.style.color = '#f7d883'
+            }, 1000);
+            setTimeout(() => {
+                icon.innerHTML = `&#xf242`;
+                icon.style.color = '#f27cd7'
+            }, 2000);
+            setTimeout(() => {
+                icon.innerHTML = `&#xf241`
+                icon.style.color = '#f2b963'
+            }, 3000);
+            setTimeout(() => {
+                icon.innerHTML = `&#xf240`;
+                icon.style.color = '#04bd10';
+            }, 4000);
+        }
+        thermo();
+        setInterval(() => {
+            thermo();
+        }, 5000);
+
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"></script>
+</body>
+
+</html>

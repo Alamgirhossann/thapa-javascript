@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Auto Counting</title>
+    <style>
+        body {
+            background: rgb(129, 128, 128);
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main{
+            display: flex;
+            color: white;
+            text-align: center;
+        }
+        .counting{
+            padding: 20px 150px 0px 150px;
+            font-size: 50px;
+        }
+         p{
+            font-size: 25px; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <i class="fa-solid fa-check-double fa-3x"></i>
+            <div class="counting" data-target="4000"></div>
+            <p>Projects Completed</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-users fa-3x"></i>
+            <div class="counting" data-target="15000"></div>
+            <p>Our clients</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-list-check fa-3x"></i>
+            <div class="counting" data-target="500"></div>
+            <p>On going projects</p>
+        </div>
+    </div>
+
+    <script>
+            const count = document.querySelectorAll(".counting");
+            count.forEach((item) => {
+                console.log(item);
+                item.innerHTML = 0;
+
+                const upDateCount =()=>{
+                    const getNum = +item.getAttribute("data-target");
+                    const startingCount = Number(item.innerHTML)
+                    const inc = getNum / 100;
+                    if (startingCount < getNum) {
+                       item.innerHTML = Math.round(`${inc + startingCount}`)
+                    }else{
+                        item.innerHTML = getNum;
+                    }
+                }
+                setInterval(() => {
+                    upDateCount();
+                }, 10);
+            })
+    </script>
+</body>
+
+</html>

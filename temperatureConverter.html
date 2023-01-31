@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            background: rgb(134, 132, 132);
+        }
+
+        input {
+            margin-right: 10px;
+        }
+
+        .main {
+            background: crimson;
+            width: 400px;
+            height: 200px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+
+        .result {
+            text-align: center;
+        }
+
+        .temp {
+            color: white;
+        }
+
+        h4 {
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="main">
+            <h4>Convert temperature</h4>
+            <div class="child">
+                <input type="number" name="inputVal" id="inputVal">
+                <select name="selectVal" id="selectVal">
+                    <option value="cel">Celcicus</option>
+                    <option value="fer">Ferenhite</option>
+                </select>
+            </div>
+            <div class="result">
+                <button type="submit" onclick="calculate()"> Submit</button>
+                <p class="temp"></p>
+            </div>
+        </form>
+
+    </div>
+    <script>
+
+        const calculate = () => {
+            event.preventDefault();
+            const inputVal = document.querySelector("#inputVal").value;
+            console.log(inputVal);
+            const selectValue = document.querySelector('#selectVal');
+            const selectedItem = selectVal.options[selectValue.selectedIndex].value;
+            console.log(selectedItem);
+            const temp = document.querySelector(".temp")
+
+            const celToFer =(far)=>{
+                let farenhite =Math.round((far * 9/5) + 32);
+                return farenhite;
+            }
+
+            const ferToCel =(cel)=>{
+                let celcius =Math.round( 5/9 * (cel-32));
+                return celcius;
+            }
+            let result;
+
+           if (selectedItem == "cel") {
+               result = celToFer(inputVal)
+               temp.innerHTML = `= ${result} farenhite`
+           }else{
+                result = ferToCel(inputVal)
+               temp.innerHTML = `= ${result} celcius`
+           }
+        }
+
+
+    </script>
+</body>
+
+</html>

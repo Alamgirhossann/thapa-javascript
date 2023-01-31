@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>light on off</title>
+    <style>
+        .main {
+            background: rgb(77, 77, 93);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+            padding-top: 80px;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="child">
+            <div>
+                <h1>You can turn light on and off</h1>
+                <button onclick='turnOn()'>turn on</button>
+                <img id="light" src="./images/lightoff.png" alt="light off">
+                <button onclick="turnOff()">turn off</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const turnOn = () => {
+            document.getElementById('light').src = './images/lighton.png';
+        }
+        const turnOff = () => {
+            document.getElementById('light').src = './images/lightoff.png';
+        }
+    </script>
+</body>
+
+</html>

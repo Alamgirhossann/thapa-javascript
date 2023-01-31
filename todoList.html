@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            background: rgb(61, 60, 60);
+        }
+        h1{
+            color: blanchedalmond;
+        }
+        h2{
+            color: blanchedalmond;
+        }
+        .task{
+            display: flex;
+            justify-content: center;
+        }
+        input{
+            border: none;
+            outline: none;
+            margin: 5px;
+            padding: 5px;
+        }
+        button{
+            margin: 5px;
+            padding: .2rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1>Add your task</h1>
+        <form class="task-form">
+            <input type="text" id="task-input" placeholder="Write your task here..">
+            <input type="submit" id="btn-task" value="Add Task">
+        </form>
+    </header>
+    <main>
+        <section class="task-list">
+            <h2>Your Task</h2>
+            <div class="tasks">
+                <!-- <div class="task">
+                    <div class="content">
+                        <input type="text" class="text" value="hello world" readonly>
+                    </div>
+                    <div class="actions">
+                        <button class="edit">Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+    </main>
+    <script>
+        window.addEventListener("load", () => {
+            const form = document.querySelector('.task-form');
+            const input = document.querySelector('#task-input');
+            const list_ele = document.querySelector('.tasks');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const task = input.value;
+                if (!task) {
+                    alert('Please fill out the task');
+                    return
+                }
+                let task_el = document.createElement('div')
+                task_el.classList.add('task');
+
+                let task_el_content = document.createElement('div');
+                task_el_content.classList.add('content');
+
+                task_el.appendChild(task_el_content);
+
+                let content_input = document.createElement('input');
+                content_input.classList.add("text");
+                content_input.type = "text";
+                content_input.value = task;
+                content_input.setAttribute("readonly", "readonly");
+                task_el_content.appendChild(content_input)
+
+                let actions = document.createElement('div');
+                actions.classList.add('actions');
+
+                let edit_btn = document.createElement('button');
+                edit_btn.classList.add('edit');
+                edit_btn.innerHTML = "Edit"
+
+                let delete_btn = document.createElement("button");
+                delete_btn.classList.add('delete');
+                delete_btn.innerHTML = "Delete"
+
+                actions.appendChild(edit_btn);
+                actions.appendChild(delete_btn);
+                task_el.appendChild(actions);
+
+                list_ele.appendChild(task_el)
+
+                input.value = "";
+
+                edit_btn.addEventListener("click", () => {
+                    if (edit_btn.innerHTML.toLowerCase() == "edit") {
+                        content_input.removeAttribute('readonly');
+                        content_input.focus();
+                        edit_btn.innerHTML = "Save";
+                    } else {
+                        content_input.setAttribute("readonly", "readonly");
+                        edit_btn.innerHTML = "Edit";
+                    }
+                })
+
+                delete_btn.addEventListener("click", () => {
+                    list_ele.removeChild(task_el);
+                })
+
+            })
+            
+        })
+
+    </script>
+</body>
+
+</html>

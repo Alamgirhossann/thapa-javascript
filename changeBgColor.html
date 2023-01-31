@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 90vh;
+            background: blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button onclick="changeColor()">Click me</button>
+
+    <script>
+        let color = ['#ffbf00', '#40ff00', '#00ffff', '#ff00ff', '#ff0040', '#ff4000'];
+        const changeColor = () => {
+            let changeBg = color[Math.floor(Math.random() * color.length)]
+            document.body.style.background = changeBg;
+        }
+    </script>
+</body>
+
+</html>

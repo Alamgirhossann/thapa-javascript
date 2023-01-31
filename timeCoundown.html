@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: rgb(110, 110, 110);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        color: white;
+      }
+      .day,
+      .hours,
+      .min,
+      .second {
+        padding: 0 50px;
+        font-size: 50px;
+        text-align: center;
+      }
+      span{
+        font-size: 20px;
+        text-align: center;
+      }
+      div{
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="day">00</div>
+      <span>Day</span>
+    </div>
+    <div>
+      <div class="hours">00</div>
+      <span>Hours</span>
+    </div>
+    <div>
+      <div class="min">00</div>
+      <span>Minutes</span>
+    </div>
+    <div>
+      <div class="second">00</div>
+      <span>Seconds</span>
+    </div>
+
+    <script>
+      const countDown = () => {
+        const countDownDate = "14 April 2022 12:00:00";
+        const getSec = new Date(countDownDate).getTime() / 1000;
+        const currentDate = new Date().getTime() / 1000;
+        let diff = getSec - currentDate;
+        const getDay = Math.floor(diff / (60 * 60 * 24));
+        const getHour = Math.floor((diff % (60 * 60 * 24)) / (60 * 60));
+        const getMin = Math.floor((diff % (60 * 60)) / 60);
+        const getSecond = Math.floor(diff % 60);
+
+        document.querySelector(".day").innerHTML = getDay;
+        document.querySelector(".hours").innerHTML = getHour;
+        document.querySelector(".min").innerHTML = getMin;
+        document.querySelector(".second").innerHTML = getSecond;
+      };
+      countDown();
+      setInterval(countDown, 1000);
+    </script>
+  </body>
+</html>

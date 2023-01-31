@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    body {
+      text-align: center;
+      background: rgb(61, 60, 60);
+    }
+
+    h1 {
+      color: blanchedalmond;
+    }
+
+    h2 {
+      color: blanchedalmond;
+    }
+
+    main {
+      width: 100%;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .task-list {
+      width: 400px;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      margin: 5px 5px;
+    }
+    .btnn{
+      margin: 0 5px;
+    }
+    li{
+      list-style: none;
+    }
+
+    #btn-task {
+      cursor: pointer;
+    }
+    .task .title{
+      padding-left: 5px;
+    }
+    a {
+      color: rgb(179, 174, 174) ;
+    }
+
+    .active {
+      color: white;
+    }
+    .show{
+      display: block;
+    }
+    .hide{
+      display: none;
+    }
+    .danger{
+      background: rgb(246, 165, 165);
+    }
+    .success{
+      background: rgb(147, 240, 147);
+    }
+    ul{
+      margin: 20px 0;
+      padding: 0;
+    }
+    .task span a{
+      color: black;
+      text-decoration: none;
+    }
+    .task2{
+      text-align: center;
+      background: white;
+    }
+    /* .msg-div{
+     
+    }*/
+    .message{
+      width: 40%;
+      display: flex;
+      justify-content: center;
+    } 
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="msg-div">
+      <div class="err-message"></div>
+    </div>
+    <h1>Add your task</h1>
+    <form class="task-form">
+      <input type="text" id="task-input" placeholder="Write your task here.." />
+      <input type="submit" id="btn-task" value="Add Task" />
+    </form>
+  </header>
+  <ul class="">
+    <li class="nav-item" data-type="all">
+      <a class="nav-link active" href="#">All</a>
+    </li>
+    <li class="nav-item" data-type="todo">
+      <a class="nav-link" href="#">To do</a>
+    </li>
+    <li class="nav-item" data-type="done">
+      <a class="nav-link" href="#">Completed</a>
+    </li>
+  </ul>
+  <main>
+    <section class="task-list">
+      <div class="tasks">
+        <!-- <div class="task">
+                    <div class="content">
+                        <input type="text" class="text" value="hello world" readonly>
+                    </div>
+                    <div class="actions">
+                        <button class="edit">Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div> -->
+
+      </div>
+      <input type="hidden" id="objIndex" value="" />
+      <input type="hidden" id="filter" value="all" />
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector(".task-form");
+    const input = document.querySelector("#task-input");
+    const list_ele = document.querySelector(".tasks");
+    const filters = document.querySelectorAll('.nav-item');
+    const alertDiv = document.querySelector(".err-message")
+
+    let todoList = [];
+
+    const alertMessage = function (message, classname){
+      alertDiv.innerHTML = message;
+      alertDiv.classList.add(classname, 'show');
+      alertDiv.classList.remove('hide')
+      setTimeout(()=>{
+        alertDiv.classList.add('hide');
+        alertDiv.classList.remove("show")
+      }, 1500);
+      return;
+    }
+
+    const getItemsFilter = function (type) {
+      let filterItems = [];
+      switch (type) {
+        case "todo":
+          filterItems = todoList.filter((item) => !item.isDone);
+          break;
+        case "done":
+          filterItems = todoList.filter((item) => item.isDone);
+          break;
+        default:
+          filterItems = todoList;
+
+      }
+      getItems(filterItems)
+    }
+
+    function removeItem(item) {
+      const removeIndex = todoList.indexOf(item)
+      todoList.splice(removeIndex, 1);
+    }
+
+    function updateItem(currentItemIndex, value) {
+      const newItem = todoList[currentItemIndex];
+      newItem.name = value;
+      todoList.splice(currentItemIndex, 1, newItem);
+      setLocalStore(todoList);
+      
+    }
+
+    const handleItem = function (itemData) {
+      const items = document.querySelectorAll(".task");
+      items.forEach((item) => {
+        if (
+          item.querySelector(".title").getAttribute("data-time") ==
+          itemData.addAt
+        ) {
+          item
+            .querySelector("[data-done]")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              const itemIndex = todoList.indexOf(itemData);
+              const currentItem = todoList[itemIndex];
+              currentItem.isDone = currentItem.isDone ? false : true;
+              todoList.splice(itemIndex, 1, currentItem);
+              setLocalStore(todoList);
+              let filterData = document.querySelector("#filter").value;
+              getItemsFilter(filterData)
+            });
+          item
+            .querySelector("[data-edit]")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              input.value = itemData.name;
+              input.focus();
+              document.querySelector("#objIndex").value =
+                todoList.indexOf(itemData);
+                
+            });
+          item
+            .querySelector("[data-delete]")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              if (confirm("Are you sure to delete the item")) {
+                list_ele.removeChild(item);
+                removeItem(item);
+                setLocalStore(todoList);
+                alertMessage("Item has been deleted", "danger");
+                return todoList.filter((item) => item != itemData)
+                
+              }
+            });
+        }
+      });
+    };
+
+    const getItems = (todoList) => {
+      list_ele.innerHTML = "";
+      if (todoList.length > 0) {
+        todoList.forEach((item) => {
+          list_ele.insertAdjacentHTML(
+            "afterbegin",
+            `<li class="task">
+                   <span class='title' data-time='${item.addAt}'>${item.name}</span>
+                   <span>
+                        <a href='#' data-done class='check btnn'>check</a>
+                        <a href='#' data-edit class='btnn'>Edit</a>
+                        <a href='#' data-delete class='btnn'>Delete</a>
+                    </span>
+                </li>`
+          );
+          handleItem(item);
+        });
+      } else {
+        list_ele.insertAdjacentHTML(
+          "afterbegin",
+          `<li class="task2">
+              <span> No Record Found </span>
+           </li>`
+        );
+      }
+    };
+
+    const getToDoList = () => {
+      const getData = JSON.parse(localStorage.getItem("todoList"));
+      if (getData === null || getData === "undefined") {
+        todoList = [];
+      } else {
+        todoList = getData;
+      }
+      getItems(todoList);
+    };
+
+    const setLocalStore = () => {
+      localStorage.setItem("todoList", JSON.stringify(todoList));
+      getToDoList();
+    };
+
+    window.addEventListener("load", () => {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const itemName = input.value.trim();
+        if (itemName.length == 0) {
+          alertMessage("please fill out the input", "danger");
+        } else {
+          let currentIndex = document.querySelector("#objIndex").value;
+          if (currentIndex) {
+            //update
+            updateItem(currentIndex, itemName)
+            document.querySelector("#objIndex").value = '';
+            alertMessage("Item has been updated", "success");
+          } else {
+            const obj = {
+              name: itemName,
+              isDone: false,
+              addAt: new Date().getTime(),
+            };
+            todoList.push(obj);
+            setLocalStore();
+            alertMessage(" item has been added", "success");
+          }
+        }
+        input.value = "";
+      });
+
+      // filter data
+      filters.forEach((tab) => {
+        tab.addEventListener('click', function (e) {
+          e.preventDefault();
+          const dataType = this.getAttribute('data-type');
+          document.querySelectorAll(".nav-link").forEach((nav) => {
+            nav.classList.remove("active")
+          })
+          this.firstElementChild.classList.add('active');
+          getItemsFilter(dataType);
+          document.querySelector("#filter").value = dataType;
+        })
+      })
+
+      getToDoList();
+    });
+  </script>
+</body>
+
+</html>
